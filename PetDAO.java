@@ -1,5 +1,11 @@
 package hw01;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.List;
 
 import hw01.util.SystemConstant;
@@ -14,12 +20,34 @@ public class PetDAO {
 	}
 	
 	public PetDAO() {
-		super();
-		// TODO Auto-generated constructor stub
 	}
 	
 	public void createTables(){
+		String createStr = readSQLFile("CreatePlace.sql");
+		String dropStr = readSQLFile("DropPlace.sql");
 		
+		try (
+			Connection con = DriverManager.getConnection(dbURL);
+			Statement stmt = con.createStatement(); //為何不用prepared?
+		){
+			stmt.executeUpdate(dropStr);
+			stmt.executeUpdate(createStr);
+			System.out.println("表格重置成功！");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	private String readSQLFile(String filename) {
+		try(
+			FileInputStream fis = new FileInputStream(filename);
+		){
+			
+		}catch (FileNotFoundException e){
+			System.out.println("所提供路徑：" + filename +"\n沒有檔案");
+		}
+		return null;
 	}
 
 	public int insert(PetBean pb){
@@ -36,11 +64,11 @@ public class PetDAO {
 		
 	}
 	
-	public PlaceBean findByPrimaryKey(int key){
+	public PetBean findByPrimaryKey(int key){
 		
 	}
 	
-	public List<PlaceBean> findAll(){
+	public List<PetBean> findAll(){
 		return null;
 	}
 
