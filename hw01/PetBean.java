@@ -1,20 +1,19 @@
 package hw01;
 
 import java.io.Serializable;
-import java.sql.Date;
 
 public class PetBean implements Serializable {
 	int id;
 	String petName; 	
 	String masterName;
-	Date birthday;  
+	String birthday;  
 	int price; 
 	double weight;    
 	String filename;  
 	byte[] picture; 
 	char[] comment;
 	
-	public PetBean(int id, String petName, String masterName, Date birthday, int price, double weight,
+	public PetBean(int id, String petName, String masterName, String birthday, int price, double weight,
 			String filename, byte[] picture, char[] comment) {
 		super();
 		this.id = id;
@@ -52,11 +51,11 @@ public class PetBean implements Serializable {
 		this.masterName = masterName;
 	}
 
-	public Date getBirthday() {
+	public String getBirthday() {
 		return birthday;
 	}
 
-	public void setBirthday(Date birthday) {
+	public void setBirthday(String birthday) {
 		this.birthday = birthday;
 	}
 

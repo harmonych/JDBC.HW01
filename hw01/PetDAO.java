@@ -17,7 +17,7 @@ import javax.sql.rowset.serial.SerialClob;
 import hw01.util.SystemConstant;
 
 public class PetDAO {
-	String dbURL = SystemConstant.URL + "?user=" + SystemConstant.USER +
+	String dbURL = "jdbc:mysql://" + SystemConstant.HOST + ":3306/" + SystemConstant.DB + "?user=" + SystemConstant.USER +
 			"&password=" + SystemConstant.PASSWORD + "&useSSL=true&useUnicode=yes&characterEncoding=UTF-8";
 
 	public PetDAO(String dbURL) {
@@ -76,7 +76,7 @@ public class PetDAO {
 		){
 			pstmt.setString(1, pb.getPetName());
 			pstmt.setString(2, pb.getMasterName());
-			pstmt.setDate(3, pb.getBirthday());   //should I use TimeStamp here?
+			pstmt.setString(3, pb.getBirthday());   //should I use TimeStamp here?
 			pstmt.setInt(4, pb.getPrice());
 			pstmt.setDouble(5, pb.getWeight());
 			pstmt.setString(6, pb.getFilename());
@@ -87,7 +87,8 @@ public class PetDAO {
 			System.out.println("表格更新成功，id = " + pb.getId());			
 		}catch (SQLException e){
 			System.out.println("SQL資料錯誤，id = " + pb.getId());
-			e.printStackTrace();}
+			e.printStackTrace();
+		}
 		return n;
 	}
 	

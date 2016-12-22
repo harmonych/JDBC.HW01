@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import hw01.PetBean;
+import hw01.PetDAO;
 
 
 public class DBUtils {
@@ -61,7 +63,7 @@ public class DBUtils {
 		
 	}
 	public static void initPlace(String filename, String encoding){
-//		PlaceDAO dao = new PlaceDAO();
+		PetDAO dao = new PetDAO();
 		try (
 			FileInputStream fis = new FileInputStream(filename);
 			InputStreamReader in = new InputStreamReader(fis, encoding);
@@ -70,25 +72,29 @@ public class DBUtils {
 			
 			String line = "";
 			while ((line = br.readLine()) != null) {
-			  String[] sa = line.split(",");
-			  int placeId = Integer.parseInt(sa[0].trim());
-			  int typeId  = Integer.parseInt(sa[1].trim());
-			  String name = sa[2].trim();
-			  String phone = sa[3].trim();
-			  String address = sa[4].trim();
-			  double longitude = Double.parseDouble(sa[5].trim());
-			  double latitude = Double.parseDouble(sa[6].trim());
-			  String link = sa[7].trim();
-			  String picFilename  = sa[8].trim();
-			  byte[] picture = DBUtils.fileToBytes("images\\" + sa[8].trim());
-			  char[] comment = DBUtils.fileToChars("text\\" + sa[9].trim(), encoding);
-//			  PlaceBean pb = new PlaceBean(placeId, typeId, 
-//				   name, phone, address, longitude, latitude, 
-//				   link, picFilename, picture, comment);
-//			  dao.insert(pb);
+			  String[] pa = line.split(",");
+			  int id = Integer.parseInt(pa[0].trim());
+			  String petName  = pa[1].trim();
+			  String masterName = pa[2].trim();
+			  String birthday = pa[3].trim();
+//			  SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//			  birthday = sdf.format(date);
+			  //Elaborate on Date imports:http://stackoverflow.com/questions/2305973/java-util-date-vs-java-sql-date
+			  //TL/DR: DBAs handle date strings which were stored as long type rather well.
+			  //       saving as long probably will save me some time. However, this is a practice for DAO project.
+			  //       So it would be wise to actually practice instead of work-around.
+			  int price = Integer.parseInt(pa[4].trim());
+			  double weight = Double.parseDouble(pa[5].trim());
+			  String picFileName = pa[6].trim();
+			  byte[] picture = DBUtils.fileToBytes("pics\\" + pa[7].trim());
+			  char[] comment = DBUtils.fileToChars("txts\\" + pa[8].trim(), encoding);
+			  PetBean pb = new PetBean(id, petName, 
+				   masterName, birthday, price, weight, 
+				   picFileName, picture, comment);
+			  dao.insert(pb);
 
 			}
-			System.out.println("?��??���??" + filename + "��?��?��???");
+			System.out.println("檔案" + filename + "新增完畢");
 		} catch (IOException ex) {
 			System.out.println(ex.getMessage() + "==>" + filename);
 			ex.printStackTrace();
