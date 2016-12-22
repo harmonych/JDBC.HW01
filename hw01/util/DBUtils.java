@@ -88,8 +88,8 @@ public class DBUtils {
 			  int price = Integer.parseInt(pa[4].trim());
 			  double weight = Double.parseDouble(pa[5].trim());
 			  String picFileName = pa[6].trim();
-			  byte[] picture = DBUtils.fileToBytes("pics\\" + pa[7].trim());
-			  char[] comment = DBUtils.fileToChars("txts\\" + pa[8].trim(), encoding);
+			  byte[] picture = DBUtils.fileToBytes("pics\\" + pa[6].trim());
+			  char[] comment = DBUtils.fileToChars("txts\\" + pa[7].trim(), encoding);
 			  PetBean pb = new PetBean(id, petName, masterName, birthday, price,
 					  				weight, picFileName, picture, comment);
 			  dao.insert(pb);
