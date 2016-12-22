@@ -1,7 +1,10 @@
 package hw01;
 
+import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -42,10 +45,20 @@ public class PetDAO {
 	private String readSQLFile(String filename) {
 		try(
 			FileInputStream fis = new FileInputStream(filename);
+			InputStreamReader isr = new InputStreamReader(fis,"BIG5");
+			BufferedReader br = new BufferedReader(isr);
+				
 		){
-			
+			String line = "";
+			StringBuffer sb = new StringBuffer();
+			while((line = br.readLine())!=null){
+				sb.append(line);
+			}
+			return sb.toString();
 		}catch (FileNotFoundException e){
 			System.out.println("所提供路徑：" + filename +"\n沒有檔案");
+		}catch (IOException e ){
+			e.printStackTrace();
 		}
 		return null;
 	}
