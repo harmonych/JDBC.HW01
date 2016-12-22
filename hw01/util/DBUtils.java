@@ -15,9 +15,11 @@ import hw01.PetDAO;
 
 public class DBUtils {
 	public static char[] fileToChars(String filename, String encoding) {
-		try (FileInputStream fis = new FileInputStream(filename);
-				InputStreamReader in = new InputStreamReader(fis, encoding);
-				CharArrayWriter caw = new CharArrayWriter();) {
+		try (
+			FileInputStream fis = new FileInputStream(filename);
+			InputStreamReader in = new InputStreamReader(fis, encoding);
+			CharArrayWriter caw = new CharArrayWriter();
+		){
 			int len = 0;
 			char[] ca = new char[8192];
 			while ((len = in.read(ca)) != -1) {
@@ -88,9 +90,8 @@ public class DBUtils {
 			  String picFileName = pa[6].trim();
 			  byte[] picture = DBUtils.fileToBytes("pics\\" + pa[7].trim());
 			  char[] comment = DBUtils.fileToChars("txts\\" + pa[8].trim(), encoding);
-			  PetBean pb = new PetBean(id, petName, 
-				   masterName, birthday, price, weight, 
-				   picFileName, picture, comment);
+			  PetBean pb = new PetBean(id, petName, masterName, birthday, price,
+					  				weight, picFileName, picture, comment);
 			  dao.insert(pb);
 
 			}
