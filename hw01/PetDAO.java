@@ -8,8 +8,11 @@ import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
+
+import javax.sql.rowset.serial.SerialClob;
 
 import hw01.util.SystemConstant;
 
@@ -65,6 +68,26 @@ public class PetDAO {
 
 	public int insert(PetBean pb){
 		int n =0;
+		String sql = "INSERT INTO Pet "
+				+ " VALUES(null, ?, ?, ? ,?, ?, ?, ? ,?)"; 
+		try(
+			Connection con = DriverManager.getConnection(dbURL);
+			PreparedStatement pstmt	= con.prepareStatement(sql);				
+		){
+			pstmt.setString(1, pb.getPetName());
+			pstmt.setString(2, pb.getMasterName());
+			pstmt.setDate(3, pb.getBirthday());   //should I use TimeStamp here?
+			pstmt.setInt(4, pb.getPrice());
+			pstmt.setDouble(5, pb.getWeight());
+			pstmt.setString(6, pb.getFilename());
+			pstmt.setBytes(7, pb.getPicture());
+			SerialClob clob = new SerialClob(pb.getComment());
+			pstmt.setClob(8, clob);
+			n = pstmt.executeUpdate();
+			System.out.println("表格更新成功，id = " + pb.getId());			
+		}catch (SQLException e){
+			System.out.println("SQL資料錯誤，id = " + pb.getId());
+			e.printStackTrace();}
 		return n;
 	}
 	
@@ -74,11 +97,12 @@ public class PetDAO {
 	}
 	
 	public int delete(int key){
-		
+		int n =0;
+		return n;
 	}
 	
 	public PetBean findByPrimaryKey(int key){
-		
+		return null;
 	}
 	
 	public List<PetBean> findAll(){
