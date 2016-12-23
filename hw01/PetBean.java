@@ -12,7 +12,10 @@ public class PetBean implements Serializable {
 	String filename;  
 	byte[] picture; 
 	char[] comment;
-	
+
+	public PetBean() {
+	}
+
 	public PetBean(int id, String petName, String masterName, String birthday, int price, double weight,
 			String filename, byte[] picture, char[] comment) {
 		super();

@@ -4,11 +4,14 @@ import java.io.BufferedReader;
 import java.io.CharArrayWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+
 import hw01.PetBean;
 import hw01.PetDAO;
 
@@ -43,27 +46,27 @@ public class DBUtils {
 		}
 		return b;
 	}
-	public static void saveCharsToFile(char[] comment, File file, String encoding) {
-		try (
-		   FileOutputStream fos = new FileOutputStream(file);
-		   OutputStreamWriter osw = new OutputStreamWriter(fos, encoding);
-		   PrintWriter pw = new PrintWriter(osw) ;		
-		) {
-			pw.println(new String(comment));
-		} catch(IOException ex){
-			ex.printStackTrace();
-		}
-	}
-	public static void saveBytesToFile(byte[] picture, File file) {
-		try (
-		   FileOutputStream fos = new FileOutputStream(file);
-		) {
-			fos.write(picture);
-		} catch(IOException ex){
-			ex.printStackTrace();
-		}
-		
-	}
+//	public static void saveCharsToFile(char[] comment, File file, String encoding) {
+//		try (
+//		   FileOutputStream fos = new FileOutputStream(file);
+//		   OutputStreamWriter osw = new OutputStreamWriter(fos, encoding);
+//		   PrintWriter pw = new PrintWriter(osw) ;		
+//		) {
+//			pw.println(new String(comment));
+//		} catch(IOException ex){
+//			ex.printStackTrace();
+//		}
+//	}
+//	public static void saveBytesToFile(byte[] picture, File file) {
+//		try (
+//		   FileOutputStream fos = new FileOutputStream(file);
+//		) {
+//			fos.write(picture);
+//		} catch(IOException ex){
+//			ex.printStackTrace();
+//		}
+//		
+//	}
 	public static void initPlace(String filename, String encoding){
 		PetDAO dao = new PetDAO();
 		try (
@@ -101,31 +104,56 @@ public class DBUtils {
 			ex.printStackTrace();
 		}
 	}
+	public static void displayData(PetBean pb){
+		String saveFolderImg = "C:\\imagesJDBCHW01";
+		File dirImg = new File(saveFolderImg);
+		if (!dirImg.exists()) dirImg.mkdirs();
+		String filenameImg = pb.getFilename();
+		File fileImg = new File(dirImg, filenameImg);
+		
+		String saveFolderTxt = "C:\\txtsJDBCHW01";
+		File dirTxt = new File(saveFolderTxt);
+		if (!dirTxt.exists()) dirTxt.mkdirs();
+		String filenameTxt = "comment" + pb.getId() + ".txt";
+		File fileTxt = new File(dirTxt, filenameTxt);
 
-//	public static void displayData(PetBean pb) {
-//		String saveFolderImg = "C:\\imagesJDBCHW01";
-//		File dirImg = new File(saveFolderImg);
-//		if (!dirImg.exists())  dirImg.mkdirs();
-//		String filenameImg = pb.getFilename(); 
-//		File fileImg = new File(dirImg, filenameImg);
+		System.out.println("Id：" + pb.getId());
+		System.out.println("寵物名稱：" + pb.getPetName());
+		System.out.println("飼主名稱：" + pb.getMasterName());
+		System.out.println("生日：" + pb.getBirthday());
+		System.out.println("價格：" + pb.getPrice());
+		System.out.println("重量：" + pb.getWeight());
+		System.out.println("檔案名稱：" + pb.getFilename());
+		saveBytesToFile(pb.getPicture(), fileImg);
+		saveCharsToFile(pb.getComment(), fileTxt, "UTF8");
+	}
+	private static void saveBytesToFile(byte[] picture, File fileImg) {
+		try(
+			FileOutputStream fos = new FileOutputStream(fileImg)
+		){
+			fos.write(picture);			
+		}catch (IOException e){
+			e.printStackTrace();
+		}
 		
+	}
+	private static void saveCharsToFile(char[] comment, File fileTxt, String encoding) {
+		try(
+			FileOutputStream fos = new FileOutputStream(fileTxt);
+			OutputStreamWriter osw = new OutputStreamWriter(fos, encoding);
+			PrintWriter pw = new PrintWriter(osw);
+		){
+			pw.println(new String(comment));
+		}catch (FileNotFoundException e){
+			e.printStackTrace();
+		}catch (UnsupportedEncodingException e){
+			e.printStackTrace();
+		}catch (IOException e){
+			e.printStackTrace();
+		}
 		
-//		String saveFolderTxt = "C:\\imagesJDBCHW01";
-//		File dirTxt = new File(saveFolderTxt);
-//		if (!dirTxt.exists())  dirTxt.mkdirs();
-//		String filenameTxt = "Comment" + pb.getPlaceId() + ".txt"; 
-//		File fileTxt = new File(dirTxt, filenameTxt);
-//		
-//		System.out.println("Place Id :"  + pb.getPlaceId());
-//		System.out.println("Type Id  :"  + pb.getTypeId());
-//		System.out.println("Name     :"  + pb.getName());
-//		System.out.println("Phone    :"  + pb.getPhone());
-//		System.out.println("Address  :"  + pb.getAddress());
-//		System.out.println("Longitude:"  + pb.getLongitude());
-//		System.out.println("Latitude :"  + pb.getLatitude());
-//		System.out.println("Link     :"  + pb.getLink());
-//		System.out.println("Filename :"  + pb.getFilename());
-//		saveBytesToFile(pb.getPicture(), fileImg);
-//		saveCharsToFile(pb.getComment(), fileTxt, "UTF8");
+	}
+
+
 }
 

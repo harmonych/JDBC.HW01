@@ -1,13 +1,17 @@
 package hw01;
 
 import java.io.BufferedReader;
+import java.io.CharArrayWriter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Reader;
+import java.sql.Clob;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
@@ -126,9 +130,57 @@ public class PetDAO {
 	}
 	
 	public PetBean findByPrimaryKey(int key){
-		return null;
+		String sql = "SELECT * FROM pet"
+				+ "WHERE id =?;";
+		PetBean pb = null;
+		try(
+			Connection con = DriverManager.getConnection(dbURL);
+			PreparedStatement pstmt = con.prepareStatement(sql);
+		){
+			pstmt.setInt(1, key);
+			try(
+				ResultSet rs = pstmt.executeQuery();
+			){
+				if (rs.next()){
+					pb = new PetBean();
+					pb.setId(rs.getInt(1));
+					pb.setPetName(rs.getString(2));
+					pb.setMasterName(rs.getString(3));
+					pb.setBirthday(rs.getString(4));
+					pb.setPrice(rs.getInt(5));
+					pb.setWeight(rs.getDouble(6));
+					pb.setFilename(rs.getString(7));
+					pb.setPicture(rs.getBytes(8));
+					pb.setComment(clobToCharArray(rs.getClob(9)));	
+				}
+			}
+			System.out.println("查詢紀錄成功, id =" + pb.getId());
+		}catch (SQLException e){
+			e.printStackTrace();
+		}
+		return pb;
 	}
 	
+	private char[] clobToCharArray(Clob clob) {
+		try(
+			Reader r = clob.getCharacterStream();
+			CharArrayWriter caw = new CharArrayWriter();	
+		){
+			char[] ca = new char[8192];
+			int len = 0;
+			while ((len=r.read(ca))!=-1){
+				caw.write(ca,0,len);
+			}
+			char[] op = caw.toCharArray();
+			return op;
+		}catch (SQLException e){
+			e.printStackTrace();
+		}catch (IOException e){
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 	public List<PetBean> findAll(){
 		return null;
 	}
