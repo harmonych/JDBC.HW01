@@ -94,6 +94,29 @@ public class PetDAO {
 	
 	public int update(PetBean pb){
 		int n=0;
+		String sql = "UPDATE pet SET petName =?, masterName =?, "
+				+ " birthday=?, price=?, weight=?, filename=?, "
+				+ " picture=?, comment=?"
+				+ " WHERE id=?;";
+		try(
+			Connection con = DriverManager.getConnection(dbURL);
+			PreparedStatement pstmt = con.prepareStatement(sql);
+		){
+			pstmt.setInt(9, pb.getId());
+			pstmt.setString(1, pb.getPetName());
+			pstmt.setString(2, pb.getMasterName());
+			pstmt.setString(3, pb.getBirthday());
+			pstmt.setInt(4, pb.getPrice());
+			pstmt.setDouble(5, pb.getWeight());
+			pstmt.setString(6, pb.getFilename());
+			pstmt.setBytes(7, pb.getPicture());
+			SerialClob clob = new SerialClob(pb.getComment());
+			pstmt.setClob(8, clob);
+			n = pstmt.executeUpdate();
+			System.out.println("修改記錄成功, id=" + pb.getId());			
+		}catch (SQLException e){
+			e.printStackTrace();
+		}
 		return n;
 	}
 	

@@ -8,9 +8,7 @@ public class PetCreateMain {
 		
 		PetDAO dao = new PetDAO();
 		dao.createTables();
-		DBUtils.initPlace("Pet.txt", "BIG5");
-		
-
+		DBUtils.initPlace("Pet.txt", "UTF8");
 	}
 
 }

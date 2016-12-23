@@ -100,17 +100,17 @@ public class DBUtils {
 			System.out.println(ex.getMessage() + "==>" + filename);
 			ex.printStackTrace();
 		}
-//	}
+	}
 
-//	public static void displayData(PlaceBean pb) {
-//		String saveFolderImg = "D:\\images1221";
+//	public static void displayData(PetBean pb) {
+//		String saveFolderImg = "C:\\imagesJDBCHW01";
 //		File dirImg = new File(saveFolderImg);
 //		if (!dirImg.exists())  dirImg.mkdirs();
 //		String filenameImg = pb.getFilename(); 
 //		File fileImg = new File(dirImg, filenameImg);
 		
 		
-//		String saveFolderTxt = "D:\\text1221";
+//		String saveFolderTxt = "C:\\imagesJDBCHW01";
 //		File dirTxt = new File(saveFolderTxt);
 //		if (!dirTxt.exists())  dirTxt.mkdirs();
 //		String filenameTxt = "Comment" + pb.getPlaceId() + ".txt"; 
@@ -126,7 +126,6 @@ public class DBUtils {
 //		System.out.println("Link     :"  + pb.getLink());
 //		System.out.println("Filename :"  + pb.getFilename());
 //		saveBytesToFile(pb.getPicture(), fileImg);
-//		saveCharsToFile(pb.getComment(), fileTxt, "BIG5");
-	}
+//		saveCharsToFile(pb.getComment(), fileTxt, "UTF8");
 }
 
