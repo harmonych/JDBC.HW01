@@ -2,7 +2,7 @@ package hw01;
 
 import hw01.util.DBUtils;
 
-public class PetFindByPKMain {
+public class PetFindAllMain {
 
 	public static void main(String[] args) {		
 		PetDAO dao = new PetDAO();

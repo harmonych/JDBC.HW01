@@ -46,27 +46,7 @@ public class DBUtils {
 		}
 		return b;
 	}
-//	public static void saveCharsToFile(char[] comment, File file, String encoding) {
-//		try (
-//		   FileOutputStream fos = new FileOutputStream(file);
-//		   OutputStreamWriter osw = new OutputStreamWriter(fos, encoding);
-//		   PrintWriter pw = new PrintWriter(osw) ;		
-//		) {
-//			pw.println(new String(comment));
-//		} catch(IOException ex){
-//			ex.printStackTrace();
-//		}
-//	}
-//	public static void saveBytesToFile(byte[] picture, File file) {
-//		try (
-//		   FileOutputStream fos = new FileOutputStream(file);
-//		) {
-//			fos.write(picture);
-//		} catch(IOException ex){
-//			ex.printStackTrace();
-//		}
-//		
-//	}
+
 	public static void initPlace(String filename, String encoding){
 		PetDAO dao = new PetDAO();
 		try (
@@ -86,8 +66,6 @@ public class DBUtils {
 //			  birthday = sdf.format(date);
 			  //Elaborate on Date imports:http://stackoverflow.com/questions/2305973/java-util-date-vs-java-sql-date
 			  //TL/DR: DBAs handle date strings which were stored as long type rather well.
-			  //       saving as long probably will save me some time. However, this is a practice for DAO project.
-			  //       So it would be wise to actually practice instead of work-around.
 			  int price = Integer.parseInt(pa[4].trim());
 			  double weight = Double.parseDouble(pa[5].trim());
 			  String picFileName = pa[6].trim();
@@ -110,7 +88,6 @@ public class DBUtils {
 		if (!dirImg.exists()) dirImg.mkdirs();
 		String filenameImg = pb.getFilename();
 		File fileImg = new File(dirImg, filenameImg);
-		
 		String saveFolderTxt = "C:\\txtsJDBCHW01";
 		File dirTxt = new File(saveFolderTxt);
 		if (!dirTxt.exists()) dirTxt.mkdirs();

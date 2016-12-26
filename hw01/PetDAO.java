@@ -14,6 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.sql.rowset.serial.SerialClob;
@@ -63,7 +64,7 @@ public class PetDAO {
 			}
 			return sb.toString();
 		}catch (FileNotFoundException e){
-			System.out.println("所提供路徑：" + filename +"\n沒有檔案");
+			System.out.println("所提供路徑：" + filename +"\n檔案不存在");
 		}catch (IOException e ){
 			e.printStackTrace();
 		}
@@ -80,7 +81,7 @@ public class PetDAO {
 		){
 			pstmt.setString(1, pb.getPetName());
 			pstmt.setString(2, pb.getMasterName());
-			pstmt.setString(3, pb.getBirthday());   //should I use TimeStamp here?
+			pstmt.setString(3, pb.getBirthday());   
 			pstmt.setInt(4, pb.getPrice());
 			pstmt.setDouble(5, pb.getWeight());
 			pstmt.setString(6, pb.getFilename());
@@ -182,7 +183,34 @@ public class PetDAO {
 	}
 
 	public List<PetBean> findAll(){
-		return null;
+		List<PetBean> list = new ArrayList<>();
+		PetBean pb = null;
+		String sql = "SELECT * FROM Pet;";
+		try(
+			Connection con = DriverManager.getConnection(dbURL);
+			PreparedStatement pstmt = con.prepareStatement(sql);
+		){
+			try(
+				ResultSet rs = pstmt.executeQuery(sql);
+			){
+				while(rs.next()){
+					pb = new PetBean();
+					pb.setId(rs.getInt(1));
+					pb.setPetName(rs.getString(2));
+					pb.setMasterName(rs.getString(3));
+					pb.setBirthday(rs.getString(4));
+					pb.setPrice(rs.getInt(5));
+					pb.setWeight(rs.getDouble(6));
+					pb.setFilename(rs.getString(7));
+					pb.setPicture(rs.getBytes(8));
+					pb.setComment(clobToCharArray(rs.getClob(9)));
+					list.add(pb);
+				}
+			}
+		}catch (SQLException e){
+			e.printStackTrace();
+		}
+		return list;
 	}
 
 }
