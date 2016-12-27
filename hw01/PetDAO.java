@@ -127,6 +127,17 @@ public class PetDAO {
 	
 	public int delete(int key){
 		int n =0;
+		String sql = "DELETE FROM Pet WHERE ID =? ;";
+		try(
+			Connection con = DriverManager.getConnection(dbURL);
+			PreparedStatement pstmt = con.prepareStatement(sql);
+		){
+			pstmt.setInt(1, key);
+			n = pstmt.executeUpdate();
+			System.out.println("刪除記錄成功。id為"+ key + "的該組資料已被刪除。");			
+		}catch (SQLException e){
+			e.printStackTrace();
+		}
 		return n;
 	}
 	
