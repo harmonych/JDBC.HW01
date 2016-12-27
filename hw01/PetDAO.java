@@ -39,7 +39,7 @@ public class PetDAO {
 		
 		try (
 			Connection con = DriverManager.getConnection(dbURL);
-			Statement stmt = con.createStatement(); //為何不用prepared?
+			Statement stmt = con.createStatement();
 		){
 			stmt.executeUpdate(dropStr);
 			stmt.executeUpdate(createStr);
@@ -132,7 +132,7 @@ public class PetDAO {
 	
 	public PetBean findByPrimaryKey(int key){
 		String sql = "SELECT * FROM pet"
-				+ "WHERE id =?;";
+				+ " WHERE id =?;";
 		PetBean pb = null;
 		try(
 			Connection con = DriverManager.getConnection(dbURL);
