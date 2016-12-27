@@ -9,5 +9,4 @@ public class PetDeleteMain {
 			System.out.println("未有該輸入id組別的資料。");
 		}
 	}
-
 }
