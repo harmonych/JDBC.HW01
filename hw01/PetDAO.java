@@ -118,7 +118,7 @@ public class PetDAO {
 			SerialClob clob = new SerialClob(pb.getComment());
 			pstmt.setClob(8, clob);
 			n = pstmt.executeUpdate();
-			System.out.println("修改記錄成功, id=" + pb.getId());			
+			if(n!=0)System.out.println("修改記錄成功, id=" + pb.getId());			
 		}catch (SQLException e){
 			e.printStackTrace();
 		}
@@ -134,7 +134,8 @@ public class PetDAO {
 		){
 			pstmt.setInt(1, key);
 			n = pstmt.executeUpdate();
-			System.out.println("刪除記錄成功。id為"+ key + "的該組資料已被刪除。");			
+			if(n!= 0)System.out.println("刪除記錄成功。id為"+ key + "的該組資料已被刪除。");
+			//當有改變資料內容時才回報刪除成功。
 		}catch (SQLException e){
 			e.printStackTrace();
 		}
