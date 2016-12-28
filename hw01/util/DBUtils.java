@@ -102,7 +102,7 @@ public class DBUtils {
 		System.out.println("重量：" + pb.getWeight());
 		System.out.println("檔案名稱：" + pb.getFilename());
 		saveBytesToFile(pb.getPicture(), fileImg);
-		saveCharsToFile(pb.getComment(), fileTxt, "UTF8");
+		saveCharsToFile(pb.getComment(), fileTxt, "UTF-8");
 	}
 	private static void saveBytesToFile(byte[] picture, File fileImg) {
 		try(

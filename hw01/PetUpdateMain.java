@@ -11,8 +11,8 @@ public class PetUpdateMain {
 		PetBean pb = new PetBean(3, "孫凱蒂", "孫慧霞", "2015-04-30" , 750,
 									 3.85, "Kitty.jpg", picture, comment);
 		int n = dao.update(pb);
-        if (n ==1 ){
-        	System.out.println("修改一筆紀錄成功。");
+        if (n >=1 ){
+        	System.out.println("修改紀錄成功。");
         }else{
         	System.out.println("未修改任何紀錄。");
         }
