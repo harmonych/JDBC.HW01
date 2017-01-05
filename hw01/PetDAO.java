@@ -34,8 +34,8 @@ public class PetDAO {
 	}
 	
 	public void createTables(){
-		String createStr = readSQLFile("CreatePlace.sql");
-		String dropStr = readSQLFile("DropPlace.sql");
+		String createStr = readSQLFile("CreatePet.sql");
+		String dropStr = readSQLFile("DropPet.sql");
 		
 		try (
 			Connection con = DriverManager.getConnection(dbURL);

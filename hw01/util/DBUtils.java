@@ -65,7 +65,7 @@ public class DBUtils {
 //			  SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 //			  birthday = sdf.format(date);
 			  //Elaborate on Date imports:http://stackoverflow.com/questions/2305973/java-util-date-vs-java-sql-date
-			  //TL/DR: DBAs handle date strings which were stored as long type rather well.
+			  //TL/DR: DBs handle date strings which were stored as long type rather well.
 			  int price = Integer.parseInt(pa[4].trim());
 			  double weight = Double.parseDouble(pa[5].trim());
 			  String picFileName = pa[6].trim();
